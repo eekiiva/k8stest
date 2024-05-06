@@ -1,0 +1,74 @@
+apiVersion: chainsaw.kyverno.io/v1alpha1
+kind: Test
+metadata:
+  name: longhorntest
+spec:
+  steps:
+  - name: ns
+    try:
+    - apply:
+        file: ns.yaml
+  - name: priorityclass
+    try:
+    - apply:
+        file: priorityclass.yaml
+    - assert:
+        file: expectedpriorityclass.yaml
+  - name : sa
+    try:
+    - apply:
+        file: serviceaccount.yaml
+    - assert:
+        file: expectedserviceaccount.yaml
+  - name: configmap
+    try:
+    - apply:
+        file: configmap.yaml
+    - assert:
+        file: expextedconfigmap.yaml
+  - name: crd
+    try:
+    - apply:
+        file: crd.yaml
+  - name: clusterrole
+    try: 
+    - apply:
+        file: clusterrole.yaml
+    - assert:
+        file: expectedclusterrole.yaml
+  - name: clusterrolebinding
+    try:
+    - apply:
+        file: clusterrolebinding.yaml
+    - assert:
+        file: expectedclusterrolebindings.yaml
+  - name: service
+    try:
+    - apply:
+        file: service.yaml
+    - assert: 
+        file: expextedservice.yaml
+  - name: daemonset
+    try:
+    - apply:
+        file: daemonset.yaml
+    - assert:
+        file: expexteddaemonset.yaml
+  - name: deployment
+    try:
+    - apply:
+        file: deployment.yaml
+    - assert:
+        file: expecteddeployments.yaml
+  - name: secret
+    try:
+    - apply:
+        file: secret.yaml
+    - assert:
+        file: expectedsecret.yaml        
+  - name: ingress
+    try:
+    - apply:
+        file: ingress.yaml
+    - assert:
+        file: expectedingress.yaml
